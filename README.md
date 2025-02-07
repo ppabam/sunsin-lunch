@@ -1,11 +1,16 @@
-# lunch-menu
+# 🍽️ **lunch-menu**
+
 - [x] 팀원들의 점심 메뉴를 수집
 - [x] 분석
 - [ ] 알람(입력하지 않은 사람들에게 ...)
 - [ ] CSV to DB
 
-## Ready
-### Install DB with Docker
+---
+
+## 🛠️ **Ready**
+
+### 📦 **Install DB with Docker**
+
 ```bash
 $ sudo docker run --name local-postgres \
 -e POSTGRES_USER=sunsin \
@@ -15,8 +20,46 @@ $ sudo docker run --name local-postgres \
 -d postgres:15.10
 ```
 
-### Create Table
-- postgres
+### 🗂️ **Create Table**
+
+- PostgreSQL:
+```sql
+CREATE TABLE public.member (
+	id serial4 NOT NULL,
+	"name" text NOT NULL,
+	CONSTRAINT member_id_pk PRIMARY KEY (id),
+	CONSTRAINT member_name_key UNIQUE (name)
+);
+
+insert into public.member(name)
+values 
+('TOM'),
+('cho'),
+('hyun'),
+('JERRY'),
+('SEO'),
+('jiwon'),
+('jacob'),
+('heejin'),
+('lucas'),
+('nuni');
+
+CREATE TABLE public.lunch_menu (
+	id serial4 NOT NULL,
+	menu_name text NOT NULL,
+	dt date NOT NULL,
+	member_id int4 NOT NULL,
+	CONSTRAINT lunch_menu_pk PRIMARY KEY (id),
+	CONSTRAINT unique_memberid_dt UNIQUE (member_id, dt)
+);
+
+-- public.lunch_menu foreign keys
+ALTER TABLE public.lunch_menu ADD CONSTRAINT menu_member_fk FOREIGN KEY (member_id) REFERENCES public.member(id);
+```
+
+<details>
+<summary>📚 **누적 생성 (SQL 블록)**</summary>
+
 ```sql
 CREATE TABLE public.lunch_menu (
 	id serial NOT NULL,
@@ -103,11 +146,14 @@ values('순대국', 11, '2025-01-01');
 -- SQL Error [23503]: ERROR: insert or update on table "lunch_menu" violates foreign key constraint "menu_member_fk"
 ```
 
-SELECT jsonb_object_agg(name, id) 
-FROM member;
+</details>
 
-## Dev
-- DB
+---
+
+## 💻 **Dev**
+
+### 🐳 **DB 관리**
+
 ```bash
 $ sudo docker ps -a
 $ sudo docker start local-postgres
@@ -117,7 +163,8 @@ $ sudo docker stop local-postgres
 $ sudo docker exec -it local-postgres bash
 ```
 
-- RUN
+### 🚀 **RUN**
+
 ```bash
 # 디비 정보에 맞춰 수정
 $ cp env.dummy .env
