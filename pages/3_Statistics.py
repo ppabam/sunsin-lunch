@@ -1,5 +1,6 @@
 import streamlit as st
 from sunsin_lunch.db import select_table
+import matplotlib.pyplot as plt
 
 st.set_page_config(page_title="STATISTICS", page_icon="🍽️")
 
@@ -8,7 +9,6 @@ st.sidebar.header("STATISTICS Menu")
 
 select_df = select_table()
 gdf = select_df.groupby('ename')['menu'].count().reset_index()
-gdf
 
 st.subheader("차트")
 # https://docs.streamlit.io/develop/api-reference/charts/st.pyplot
@@ -19,3 +19,6 @@ try:
 except Exception as e:
     st.warning(f"차트를 그리기에 충분한 데이터가 없습니다")
     print(f"Exception:{e}")
+
+st.subheader("테이블")
+st.dataframe(gdf, use_container_width=True)
