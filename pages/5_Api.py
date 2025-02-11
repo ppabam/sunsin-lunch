@@ -5,7 +5,7 @@ import datetime
 
 st.set_page_config(page_title="API", page_icon="🍽️")
 
-st.markdown("# 🍽️ API")`
+st.markdown("# 🍽️ API")
 st.sidebar.header("나이계산기")
 
 dt = st.date_input("생일입력", min_value=datetime.date(1900,1,1))
