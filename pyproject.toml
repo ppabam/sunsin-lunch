@@ -1,6 +1,6 @@
 [project]
 name = "sunsin-lunch"
-version = "0.1.0"
+version = "0.5.0"
 description = "Team Soonshin member lunch record data EDA"
 authors = [
     {name = "ppabam", email = "tom@diginori.com"},
