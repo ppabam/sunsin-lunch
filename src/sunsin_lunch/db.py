@@ -47,15 +47,17 @@ def select_table():
         inner join member m
         on l.member_id = m.id
     """
-
+    selected_columns = []
     conn = get_connection()
     cursor = conn.cursor()
     cursor.execute(query)
     rows = cursor.fetchall()
+    for col in cursor.description:
+        selected_columns.append(col.name)
     cursor.close()
     conn.close()
 
-    df = pd.DataFrame(rows, columns=['menu','ename','dt'])
+    df = pd.DataFrame(rows, columns=selected_columns)
     return df
 
 def select_members_without_lunch():
